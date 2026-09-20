@@ -1,0 +1,193 @@
+/* ==========================================================================
+   Lumina — responsive.css
+   Desktop → laptop → tablet → mobile. Below 900px the sidebar becomes a
+   bottom navigation bar.
+   ========================================================================== */
+
+/* ---------- laptop ---------- */
+@media (max-width: 1180px) {
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .span-4, .span-5, .span-7, .span-8 { grid-column: span 12; }
+  .insight-strip { grid-template-columns: 1fr; }
+  .plan-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plan-controls .btn { grid-column: 1 / -1; justify-self: start; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .editor-body[data-mode='split'] { grid-template-columns: 1fr; }
+  .editor-body[data-mode='split'] .note-preview {
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+  }
+}
+
+/* ---------- tablet ---------- */
+@media (max-width: 1000px) {
+  .focus-layout { grid-template-columns: 1fr; }
+  .notes-layout { grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); }
+}
+
+/* ---------- tablet portrait & mobile: bottom navigation ---------- */
+@media (max-width: 900px) {
+  .app,
+  .app[data-collapsed='true'] { grid-template-columns: minmax(0, 1fr); }
+
+  .sidebar {
+    position: fixed;
+    inset: auto 0 0 0;
+    height: auto;
+    flex-direction: row;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.94);
+    border-right: 0;
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+  }
+  .brand, .side-foot, .collapse-btn { display: none; }
+  .topbar-brand { display: inline-flex; }
+  .sidebar nav { flex: 1; overflow: visible; }
+  .nav-list { display: flex; gap: 2px; }
+  .nav-list li { flex: 1; min-width: 0; }
+  .nav-link,
+  .app[data-collapsed='true'] .nav-link {
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 7px 2px 5px;
+    border-radius: 14px;
+    font-size: 10.5px;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .nav-label,
+  .app[data-collapsed='true'] .nav-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .nav-short { display: block; }
+  .nav-badge,
+  .app[data-collapsed='true'] .nav-badge {
+    position: absolute;
+    top: 1px;
+    right: 14%;
+    margin: 0;
+    min-width: 17px;
+    padding: 0 5px;
+    font-size: 10.5px;
+  }
+
+  .main { padding-bottom: calc(var(--nav-h) + 40px + env(safe-area-inset-bottom)); }
+  .topbar { padding-top: max(16px, env(safe-area-inset-top)); }
+  .toasts {
+    left: 12px;
+    right: 12px;
+    bottom: calc(var(--nav-h) + 14px + env(safe-area-inset-bottom));
+    justify-items: center;
+  }
+
+  .notes-layout { grid-template-columns: 1fr; }
+  .notes-list-pane { max-height: none; }
+  .notes-layout[data-editor-open='true'] .notes-list-pane { display: none; }
+  .notes-layout[data-editor-open='false'] .note-editor-pane { display: none; }
+  .only-narrow { display: inline-grid; }
+  .note-editor-pane { min-height: 0; }
+
+  .plan-item { grid-template-columns: auto minmax(0, 1fr); }
+  .plan-item .plan-time { grid-column: 2; }
+  .plan-item .plan-main { grid-column: 1 / -1; }
+  .plan-item .plan-actions { grid-column: 1 / -1; justify-content: flex-end; margin-top: 0; }
+}
+
+/* ---------- mobile ---------- */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .main { padding-left: 16px; padding-right: 16px; }
+  .topbar-date { display: none; }
+  .focus-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: 'check time btn' 'main main main';
+    gap: 8px 12px;
+  }
+  .focus-item .check { grid-area: check; }
+  .focus-item .focus-time { grid-area: time; min-width: 0; align-self: center; }
+  .focus-item .btn { grid-area: btn; justify-self: end; }
+  .focus-item .focus-main { grid-area: main; padding-left: 40px; }
+  .net-pill .txt,
+  #quick-add .btn span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .net-pill { padding: 7px 10px; }
+  #quick-add .btn { padding: 9px 12px; min-width: 42px; }
+
+  .panel { padding: 18px; border-radius: 22px; }
+  .stats-grid { gap: 10px; }
+  .stat-card { padding: 14px 14px 16px; border-radius: 20px; }
+  .stat-value { font-size: 24px; }
+  .stat-label { font-size: 12.5px; }
+  .stat-icon { display: none; }
+  .stat-sub, .stat-trend { font-size: 12.5px; }
+
+  .field-row { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .plan-controls { grid-template-columns: 1fr; }
+  .welcome-actions { width: 100%; }
+  .welcome-actions .btn { flex: 1; }
+  .tabs { width: 100%; overflow-x: auto; flex-wrap: nowrap; border-radius: 22px; }
+  .tab { flex: none; }
+  .toolbar:not(.toolbar-stack) .search { max-width: none; flex-basis: 100%; }
+  .toolbar-count { margin-left: 0; }
+  .page-head { margin-bottom: 16px; }
+  .page-head .btn { width: 100%; }
+  .level-chip { width: 100%; }
+  .privacy-hero { flex-direction: column; gap: 14px; }
+  .import-counts { grid-template-columns: 1fr; }
+  .week-list { display: none; }
+  .switch-row { align-items: flex-start; }
+  .modal-onboarding .modal-body { padding: 22px 20px 28px; }
+  .editor-bar { flex-wrap: wrap; }
+  .editor-bar .note-title { flex-basis: 100%; order: 3; }
+  .editor-meta select { min-width: 0; width: 100%; }
+  .editor-meta .field-inline { flex-wrap: wrap; width: 100%; }
+  .task-card { padding: 12px; gap: 10px; }
+
+  /* modals become bottom sheets */
+  .modal-layer { align-items: end; padding: 0; }
+  .modal {
+    max-width: none;
+    max-height: 92vh;
+    border-radius: 26px 26px 0 0;
+    transform: translateY(24px);
+  }
+  .modal-onboarding { max-height: 96vh; }
+  .modal-body { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .form-actions { flex-wrap: wrap; }
+  .form-actions .btn { flex: 1; }
+}
+
+@media (max-width: 380px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .mode-chip { min-width: 96px; }
+  .nav-link { font-size: 9.5px; }
+}
+
+/* ---------- large screens ---------- */
+@media (min-width: 1500px) {
+  .view { max-width: 1320px; }
+}
+
+/* ---------- print (notes / analytics) ---------- */
+@media print {
+  .sidebar, .topbar, .toasts, .btn, .icon-btn { display: none !important; }
+  .app { display: block; }
+  body { background: #fff; }
+}

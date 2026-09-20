@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-accent="blush">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lumina — Offline AI Study Dashboard</title>
+  <meta name="description" content="Lumina: learn quietly, track deeply, grow consistently. A private study dashboard that works offline.">
+  <meta name="theme-color" content="#FFF9F3">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23FFD9E8'/%3E%3Cpath d='M32 12l5.5 14.5L52 32l-14.5 5.5L32 52l-5.5-14.5L12 32l14.5-5.5z' fill='%23B6456F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a class="skip-link" href="#view">Skip to content</a>
+
+  <div class="app" id="app" data-collapsed="false">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span class="brand-name">LUMINA</span>
+        <button type="button" class="icon-btn collapse-btn" id="collapse-btn" data-click="sidebar:toggle" aria-pressed="false" aria-label="Collapse sidebar" data-tip="Collapse sidebar">
+          <span data-icon="sidebar" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="#/dashboard" data-route="dashboard" title="Dashboard">
+              <span class="nav-icon" data-icon="home" aria-hidden="true"></span>
+              <span class="nav-label">Dashboard</span>
+              <span class="nav-short" aria-hidden="true">Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/subjects" data-route="subjects" title="Subjects">
+              <span class="nav-icon" data-icon="book" aria-hidden="true"></span>
+              <span class="nav-label">Subjects</span>
+              <span class="nav-short" aria-hidden="true">Subjects</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/tasks" data-route="tasks" title="Tasks">
+              <span class="nav-icon" data-icon="check" aria-hidden="true"></span>
+              <span class="nav-label">Tasks</span>
+              <span class="nav-short" aria-hidden="true">Tasks</span><span class="nav-badge" id="badge-tasks" hidden></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/focus" data-route="focus" title="Focus">
+              <span class="nav-icon" data-icon="timer" aria-hidden="true"></span>
+              <span class="nav-label">Focus</span>
+              <span class="nav-short" aria-hidden="true">Focus</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/notes" data-route="notes" title="Notes">
+              <span class="nav-icon" data-icon="note" aria-hidden="true"></span>
+              <span class="nav-label">Notes</span>
+              <span class="nav-short" aria-hidden="true">Notes</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/ai" data-route="ai" title="AI Study">
+              <span class="nav-icon" data-icon="sparkle" aria-hidden="true"></span>
+              <span class="nav-label">AI Study</span>
+              <span class="nav-short" aria-hidden="true">AI</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/analytics" data-route="analytics" title="Analytics">
+              <span class="nav-icon" data-icon="chart" aria-hidden="true"></span>
+              <span class="nav-label">Analytics</span>
+              <span class="nav-short" aria-hidden="true">Stats</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#/settings" data-route="settings" title="Settings">
+              <span class="nav-icon" data-icon="settings" aria-hidden="true"></span>
+              <span class="nav-label">Settings</span>
+              <span class="nav-short" aria-hidden="true">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="side-foot">
+        <p class="side-tagline">Learn quietly. Track deeply. Grow consistently.</p>
+        <p class="status-line is-online" id="net-status" role="status"><span class="dot" aria-hidden="true">●</span><span class="txt">Online. Works offline too</span></p>
+        <a class="status-line is-ok" id="storage-status" href="#/privacy"><span class="dot" aria-hidden="true">●</span><span class="txt">Local storage active</span></a>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <span class="topbar-brand" aria-hidden="true">✦ LUMINA</span>
+          <p class="topbar-date" id="today-label"></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <a class="timer-pill" id="timer-pill" href="#/focus" hidden><span aria-hidden="true">✦</span><span class="pill-text"></span></a>
+          <span class="net-pill is-online" id="net-pill" role="status"><span class="dot-net" aria-hidden="true">●</span><span class="txt">Online</span></span>
+          <div id="quick-add"></div>
+        </div>
+      </header>
+
+      <main id="view" class="view" tabindex="-1">
+        <noscript>Lumina needs JavaScript to run. It doesn’t need the internet.</noscript>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Classic scripts (not ES modules) so the app opens straight from index.html
+       via file:// — browsers block module imports on file:// URLs.
+       Every file registers itself on the single window.Lumina namespace. -->
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/intelligence.js"></script>
+  <script src="js/backup.js"></script>
+  <script src="js/subjects.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Lumina — animations.css
+   Fast, smooth, subtle. Motion answers an action (opening, completing,
+   unlocking); nothing loops except the running-timer star. Everything is
+   switched off for people who prefer reduced motion.
+   ========================================================================== */
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.view.page-enter { animation: page-enter 0.26s ease both; }
+
+/* progress bars fill in when a page first opens */
+@keyframes bar-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.view[data-fresh] .progress > span { animation: bar-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+/* chart bars and the donut grow in on first view */
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+.chart-bar {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.view[data-fresh] .chart-bar { animation: bar-grow 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes donut-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.view[data-fresh] .donut-seg { animation: donut-in 0.6s ease both; }
+
+/* task completion */
+@keyframes check-pop {
+  0%   { transform: scale(0.8); }
+  55%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+@keyframes task-settle {
+  0%   { background-color: rgba(220, 239, 229, 0.9); }
+  100% { background-color: transparent; }
+}
+.task-card.just-done .check { animation: check-pop 0.32s ease; }
+.task-card.just-done { animation: task-settle 0.9s ease; }
+
+/* achievement toast: a single soft shimmer */
+@keyframes shimmer {
+  from { background-position: -160% 0; }
+  to   { background-position: 260% 0; }
+}
+.toast-achievement {
+  background-image: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.18) 50%, transparent 70%);
+  background-size: 60% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.4s ease 0.3s 1;
+}
+
+/* completion modal: the star gets a quiet moment */
+@keyframes star-spin-in {
+  from { transform: rotate(-40deg) scale(0.6); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.ob-mark { animation: star-spin-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* the one continuous motion: the star inside a running timer */
+@keyframes star-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(0.94); }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+.timer-card[data-status='running'] .timer-star { animation: star-breathe 3.2s ease-in-out infinite; }
+
+/* dropdowns */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+.dropdown-menu:not([hidden]) { animation: menu-in 0.14s ease; transform-origin: top right; }
+
+/* switch and swatches */
+.swatch > span:active { transform: scale(0.92); }
+
+/* notification pill for a running timer */
+@keyframes pill-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+.timer-pill:not([hidden]) { animation: pill-in 0.2s ease; }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
